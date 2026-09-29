@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Questionário de Mapeamento da Comunidade</title>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+--bg:#EDF3F1;--sf:#fff;--ink:#12303B;--mut:#57707A;--ln:#C9D9D6;--pr:#0E6F6E;--prt:#fff;--ac:#F2B134;--er:#B3372B;--soft:#E2EEEB}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 96px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0E1C21;--sf:#152A31;--ink:#E6F0EE;--mut:#93ADB3;--ln:#2A4650;--pr:#4CC3C0;--prt:#062326;--er:#FF8A7D;--soft:#1C353D}}
+:root[data-theme="dark"]{--bg:#0E1C21;--sf:#152A31;--ink:#E6F0EE;--mut:#93ADB3;--ln:#2A4650;--pr:#4CC3C0;--prt:#062326;--er:#FF8A7D;--soft:#1C353D}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.5 'Atkinson Hyperlegible',system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif}
+.wrap{max-width:680px;margin:0 auto;padding:0 16px 96px}
+header{padding:20px 0 8px}
+h1{font-size:1.45rem;line-height:1.25;margin:0 0 4px}
+.sub{color:var(--mut);margin:0;font-size:.95rem}
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding:10px 0 8px;border-bottom:1px solid var(--ln)}
+.tabs{display:flex;gap:8px}
+.tabs button{flex:1;min-height:44px;border:1px solid var(--ln);background:var(--sf);color:var(--ink);border-radius:10px;font:inherit;font-weight:700}
+.tabs button[aria-pressed="true"]{background:var(--pr);color:var(--prt);border-color:var(--pr)}
+.prog{height:6px;background:var(--soft);border-radius:3px;margin-top:10px;overflow:hidden}
+.prog i{display:block;height:100%;width:0;background:var(--ac);transition:width .25s}
+.plabel{font-size:.82rem;color:var(--mut);margin-top:4px}
+section.blk{margin-top:28px}
+h2{font-size:1.15rem;margin:0 0 12px;padding-bottom:6px;border-bottom:3px solid var(--ac)}
+.q{background:var(--sf);border:1px solid var(--ln);border-radius:12px;padding:14px;margin-bottom:12px}
+.q>p.t{margin:0 0 4px;font-weight:700}
+.hint{font-size:.85rem;color:var(--mut);margin:0 0 8px}
+.opt{display:flex;align-items:flex-start;gap:12px;min-height:48px;padding:10px 8px;border-radius:8px;cursor:pointer}
+.opt:hover{background:var(--soft)}
+.opt input{width:22px;height:22px;margin:1px 0 0;accent-color:var(--pr);flex:none}
+.opt.dis{opacity:.45;cursor:not-allowed}
+input[type=text],textarea{width:100%;font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--ln);border-radius:8px;padding:10px;margin-top:4px}
+textarea{min-height:90px;resize:vertical}
+input:focus-visible,textarea:focus-visible,button:focus-visible,select:focus-visible,.opt:focus-within,.sc label:focus-within{outline:3px solid var(--pr);outline-offset:2px}
+.legend{font-size:.85rem;color:var(--mut);margin:0 0 10px}
+.grow{padding:8px 0;border-top:1px solid var(--ln)}
+.grow p{margin:0 0 8px}
+.sc{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+.sc label{position:relative}
+.sc input{position:absolute;opacity:0;inset:0;width:100%;height:100%;margin:0;cursor:pointer}
+.sc span{display:flex;align-items:center;justify-content:center;min-height:48px;border:1px solid var(--ln);border-radius:10px;font-weight:700;background:var(--bg)}
+.sc input:checked+span{background:var(--pr);color:var(--prt);border-color:var(--pr)}
+.intro{background:var(--sf);border:1px solid var(--ln);border-left:6px solid var(--pr);border-radius:12px;padding:14px;margin-top:16px}
+.intro ul{padding-left:20px;margin:8px 0}
+.btn{display:block;width:100%;min-height:52px;border:0;border-radius:12px;background:var(--pr);color:var(--prt);font:inherit;font-weight:700;font-size:1.05rem;margin-top:8px}
+.btn.sec{background:var(--sf);color:var(--ink);border:1px solid var(--ln)}
+.btn.dng{background:var(--er);color:#fff}
+.btn:disabled{opacity:.5}
+.msg{padding:12px;border-radius:10px;margin:12px 0;font-weight:700}
+.msg.ok{background:var(--soft);border:1px solid var(--pr)}
+.msg.er{background:var(--sf);border:1px solid var(--er);color:var(--er)}
+.res .q{padding:14px}
+.rb{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr) 34px;align-items:center;gap:8px;font-size:.9rem;margin:5px 0}
+.rb div.b{height:12px;background:var(--soft);border-radius:6px;overflow:hidden}
+.rb div.b i{display:block;height:100%;background:var(--pr)}
+.rb b{text-align:right}
+ul.tx{margin:6px 0 0;padding-left:18px;font-size:.92rem}
+select{font:inherit;min-height:44px;padding:0 10px;border-radius:8px;border:1px solid var(--ln);background:var(--sf);color:var(--ink);width:100%}
+[hidden]{display:none!important}
+.stat{font-size:2rem;font-weight:700;margin:0}
+@media (prefers-reduced-motion:reduce){.prog i{transition:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+<h1>Questionário de mapeamento da comunidade</h1>
+<p class="sub">Gestão, tecnologia e sustentabilidade em negócios e empresas locais · Extensão ADS · Eixo Economia Sustentável</p>
+</header>
+<div class="bar">
+<div class="tabs"><button id="tA" aria-pressed="true">Aplicar questionário</button><button id="tR" aria-pressed="false">Resultados</button></div>
+<div id="pg"><div class="prog"><i id="pb"></i></div><div class="plabel" id="pl"></div></div>
+</div>
+
+<main id="apply">
+<div class="intro">
+<strong>Apresentação e consentimento</strong>
+<p style="margin:6px 0 0">Olá! Sou Carlos, estudante de Análise e Desenvolvimento de Sistemas da Cruzeiro do Sul. Este questionário faz parte de um projeto de extensão e busca conhecer, a partir de proprietários e funcionários, como negócios e empresas da região cuidam da gestão, usam tecnologia e lidam com o desperdício.</p>
+<ul>
+<li>A participação é voluntária: você pode parar ou pular qualquer pergunta.</li>
+<li>É anônimo: não pedimos nome, CPF, endereço, contato nem valores financeiros. Ninguém do seu local de trabalho verá respostas individuais.</li>
+<li>Os dados serão usados só para fins acadêmicos, de forma agrupada.</li>
+<li>Tempo estimado: cerca de 12 minutos. Não há respostas certas ou erradas.</li>
+</ul>
+<label class="opt" style="padding-left:0"><input type="checkbox" id="consent"><span><strong>Li as informações acima e concordo em participar.</strong></span></label>
+</div>
+<div id="form"></div>
+<div id="fmsg" role="status"></div>
+<button class="btn" id="save">Salvar resposta</button>
+</main>
+
+<main id="results" class="res" hidden>
+<div class="q"><p class="stat" id="tot">0</p><p class="hint" style="margin:0">respostas salvas</p></div>
+<div class="q"><label for="flt" class="t" style="font-weight:700;display:block;margin-bottom:6px">Filtrar por função</label>
+<select id="flt"></select></div>
+<div id="rout"></div>
+<button class="btn sec" id="csv">Baixar planilha (CSV)</button>
+<button class="btn sec" id="rel">Atualizar</button>
+<button class="btn sec dng" id="del" style="color:#fff">Apagar todas as respostas</button>
+<div id="rmsg" role="status"></div>
+</main>
+</div>
+
+<script>
+const S=['Discordo totalmente','Discordo','Neutro','Concordo','Concordo totalmente'];
+const NS='Não sei / não participo dessa parte';
+const B=[
+{t:'Bloco 1 – Sobre você e o local onde trabalha',q:[
+{k:'q1',t:'s',p:'Qual é a sua função?',o:['Proprietário(a) ou sócio(a)','Funcionário(a)','Familiar que ajuda no negócio','Outra*']},
+{k:'q2',t:'s',p:'Qual é a sua faixa etária?',o:['Até 24 anos','25 a 34 anos','35 a 44 anos','45 a 59 anos','60 anos ou mais','Prefiro não informar']},
+{k:'q3',t:'s',p:'Qual é o seu nível de escolaridade?',h:'Completo ou incompleto',o:['Ensino fundamental','Ensino médio','Ensino superior','Pós-graduação','Prefiro não informar']},
+{k:'q4',t:'s',p:'Qual é o ramo do negócio ou da empresa onde você trabalha?',o:['Alimentação (restaurante, lanchonete, padaria)','Comércio de produtos (mercado, loja, papelaria etc.)','Serviços (salão, oficina, assistência técnica etc.)','Produção artesanal ou indústria de pequeno porte','Outro*']},
+{k:'q5',t:'s',p:'Há quanto tempo o negócio ou a empresa existe?',o:['Menos de 1 ano','1 a 3 anos','4 a 10 anos','Mais de 10 anos','Não sei']},
+{k:'q6',t:'s',p:'Quantas pessoas trabalham no local, incluindo você?',o:['Só eu','2 a 3','4 a 9','10 ou mais']}]},
+{t:'Bloco 2 – Gestão do negócio',q:[
+{k:'q7',t:'m',p:'Como são registradas hoje as vendas e as despesas?',h:'Marque todas as que se aplicam',o:['Caderno ou anotações','Planilha','Aplicativo ou sistema de gestão','Não há registro',NS]},
+{k:'q8',t:'s',p:'Como é feito o controle do estoque?',o:['Contagem manual periódica','Anotações em caderno','Planilha ou sistema','Não há controle','Não se aplica a este negócio',NS]},
+{k:'q9',t:'s',p:'O dinheiro do negócio é separado do dinheiro pessoal do(a) proprietário(a)?',o:['Sim','Em parte','Não','Não sei / não se aplica à minha função']},
+{k:'q10',t:'m',max:2,p:'Qual é a maior dificuldade do negócio ou da empresa hoje?',h:'Marque até duas',o:['Controlar as finanças','Atrair e manter clientes','Controlar o estoque','Definir preços','Divulgar o negócio','Falta de tempo','Encontrar e organizar informações (registros, cadastros)','Uso de tecnologia','Outra*']},
+{k:'q11',t:'g',p:'Indique o quanto você concorda com cada afirmação.',r:['Consigo acompanhar com facilidade como estão as vendas e os resultados do mês.','É fácil encontrar e registrar as informações do dia a dia (vendas, estoque, clientes).','Perco tempo com tarefas repetitivas que poderiam ser mais simples.','Sinto que o local precisa de apoio externo para organizar informações e finanças.']}]},
+{t:'Bloco 3 – Tecnologia e acesso digital',q:[
+{k:'q12',t:'m',p:'Quais equipamentos você usa no trabalho?',h:'Marque todos que se aplicam',o:['Celular','Computador ou notebook','Tablet','Maquininha de cartão','Nenhum']},
+{k:'q13',t:'m',p:'Quais destas ferramentas você já usa no trabalho?',h:'Marque todas que se aplicam',o:['WhatsApp ou WhatsApp Business','Instagram ou Facebook','Pix','Planilhas (Excel, Google Planilhas)','Sistema de vendas, caixa ou gestão','Aplicativos de entrega','Site ou loja virtual próprios','Nenhuma']},
+{k:'q14',t:'s',p:'Você já usou algum sistema ou aplicativo de gestão (vendas, estoque, caixa)?',o:['Sim, uso atualmente','Já usei, mas parei de usar','Nunca usei','Não sei']},
+{k:'q15',t:'m',max:2,p:'Se você (ou o local) não usa um sistema de gestão, o que mais dificulta?',h:'Marque até duas',o:['Custo','Falta de tempo','Dificuldade para usar','Falta de conhecimento ou treinamento','Não vejo necessidade','Já usamos um sistema','Outro*']},
+{k:'q16',t:'s',p:'As informações de clientes e vendas já foram perdidas ou ficaram desatualizadas?',o:['Nunca','Raramente','Às vezes','Frequentemente','Não sei']},
+{k:'q17',t:'g',p:'Indique o quanto você concorda com cada afirmação.',r:['Sinto-me à vontade para usar o celular e aplicativos no dia a dia do trabalho.','Tenho receio de golpes ou de erros ao usar pagamentos digitais.','Tenho acesso à internet de boa qualidade no local de trabalho.','Recebi orientação ou treinamento para usar as ferramentas digitais do trabalho.']},
+{k:'q18',t:'t',p:'Que tarefa você gostaria que um aplicativo ou sistema fizesse por você, ou que ficasse mais simples e rápida?'}]},
+{t:'Bloco 4 – Sustentabilidade e desperdício',q:[
+{k:'q19',t:'s',p:'Com que frequência ocorre perda ou sobra de produtos e materiais (vencimento, estrago, sobras)?',o:['Nunca','Raramente','Às vezes','Frequentemente','Não se aplica','Não sei']},
+{k:'q20',t:'m',p:'O que costuma acontecer com essas sobras e resíduos?',h:'Marque todas que se aplicam',o:['Descarte no lixo comum','Reaproveitamento no próprio negócio','Doação','Coleta seletiva ou reciclagem','Outro*','Não se aplica','Não sei']},
+{k:'q21',t:'g',p:'Indique o quanto você concorda com cada afirmação.',r:['Preocupo-me em reduzir o desperdício no local onde trabalho.','Conheço formas simples de reaproveitar ou reciclar materiais.','Adotar práticas sustentáveis é possível dentro do orçamento do local.']}]},
+{t:'Bloco 5 – Relação com a comunidade',q:[
+{k:'q22',t:'m',max:2,p:'Como a maioria dos clientes conhece o negócio ou a empresa?',h:'Marque até duas',o:['Indicação de conhecidos','Passam pela rua ou vizinhança','Redes sociais','WhatsApp','Outro*','Não sei']},
+{k:'q23',t:'t',p:'Que tradições, costumes ou eventos da sua comunidade você considera importantes e gostaria que fossem respeitados em projetos como este?'}]},
+{t:'Bloco 6 – Interesse em apoio e capacitação',q:[
+{k:'q24',t:'s',p:'Você participaria de uma oficina ou atendimento gratuito para melhorar a gestão do negócio ou da empresa?',o:['Sim','Talvez','Não']},
+{k:'q25',t:'m',max:2,p:'Qual destes temas seria mais útil?',h:'Marque até dois',o:['Organização de vendas, estoque e informações com planilhas ou sistemas simples','Divulgação online (WhatsApp, redes sociais)','Pagamentos digitais e segurança contra golpes','Redução do desperdício','Outro*']},
+{k:'q26',t:'s',p:'Qual formato você prefere?',o:['Oficina em grupo','Atendimento individual no local de trabalho','Curso curto em vários encontros','Material impresso ou vídeos']},
+{k:'q27',t:'s',p:'Qual período seria melhor para você?',o:['Manhã em dias úteis','Tarde em dias úteis','Noite em dias úteis','Fins de semana']},
+{k:'q28',t:'t',p:'Deseja deixar algum comentário ou sugestão?'}]}
+];
+const Q=B.flatMap(b=>b.q);
+const $=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;');
+const clean=o=>o.replace('*','');
+let ans={};
+
+function render(){
+  let n=0;
+  $('form').innerHTML=B.map(b=>'<section class="blk"><h2>'+b.t+'</h2>'+b.q.map(q=>{
+    n++;
+    let h='<div class="q" data-q="'+q.k+'"><p class="t">'+n+'. '+q.p+'</p>'+(q.h?'<p class="hint">'+q.h+'</p>':'');
+    if(q.t==='s'||q.t==='m'){
+      const ty=q.t==='s'?'radio':'checkbox';
+      h+=q.o.map(o=>'<label class="opt"><input type="'+ty+'" name="'+q.k+'" value="'+esc(clean(o))+'" data-k="'+q.k+'"'+(o.endsWith('*')?' data-oth="1"':'')+'><span>'+clean(o)+'</span></label>').join('');
+      if(q.o.some(o=>o.endsWith('*')))h+='<input type="text" class="oth" data-ok="'+q.k+'" placeholder="Especifique" aria-label="Especifique" hidden>';
+    }else if(q.t==='g'){
+      h+='<p class="legend">1 = Discordo totalmente · 3 = Neutro · 5 = Concordo totalmente</p>'+q.r.map((r,i)=>'<div class="grow"><p>'+String.fromCharCode(97+i)+') '+r+'</p><div class="sc" role="radiogroup" aria-label="'+esc(r)+'">'+S.map((s,j)=>'<label><input type="radio" name="'+q.k+i+'" value="'+esc(s)+'" data-g="'+q.k+'" data-i="'+i+'" aria-label="'+s+'"><span>'+(j+1)+'</span></label>').join('')+'</div></div>').join('');
+    }else h+='<textarea data-t="'+q.k+'" aria-label="Sua resposta"></textarea>';
+    return h+'</div>';
+  }).join('')).join('');
+  ans={};upd();
+}
+
+function answered(q){
+  const v=ans[q.k];
+  if(q.t==='g')return !!v&&Object.keys(v).length>0;
+  if(q.t==='m')return Array.isArray(v)&&v.length>0;
+  return !!v&&String(v).trim()!=='';
+}
+function upd(){
+  const c=Q.filter(answered).length;
+  $('pb').style.width=(c/Q.length*100)+'%';
+  $('pl').textContent=c+' de '+Q.length+' perguntas respondidas';
+}
+
+$('form').addEventListener('change',e=>{
+  const t=e.target,k=t.dataset.k;
+  if(k){
+    const q=Q.find(x=>x.k===k);
+    if(q.t==='s')ans[k]=t.value;
+    else{
+      const chk=[...document.querySelectorAll('input[name="'+k+'"]:checked')];
+      ans[k]=chk.map(x=>x.value);
+      if(q.max){document.querySelectorAll('input[name="'+k+'"]').forEach(x=>{const d=!x.checked&&chk.length>=q.max;x.disabled=d;x.closest('.opt').classList.toggle('dis',d)})}
+    }
+    const oi=document.querySelector('input[name="'+k+'"][data-oth]');
+    const ot=document.querySelector('[data-ok="'+k+'"]');
+    if(oi&&ot){ot.hidden=!oi.checked;if(!oi.checked){ot.value='';delete ans[k+'_o']}}
+  }else if(t.dataset.g){
+    const g=t.dataset.g;ans[g]=ans[g]||{};ans[g][String.fromCharCode(97+ +t.dataset.i)]=t.value;
+  }
+  upd();
+});
+$('form').addEventListener('input',e=>{
+  const t=e.target;
+  if(t.dataset.t)ans[t.dataset.t]=t.value;
+  if(t.dataset.ok)ans[t.dataset.ok+'_o']=t.value;
+  upd();
+});
+
+function msg(id,txt,cls){const el=$(id);el.innerHTML=txt?'<div class="msg '+cls+'">'+txt+'</div>':''}
+let dbP=(async()=>{try{return await window.claude.use('db')}catch(e){return null}})();
+const getDb=()=>dbP;
+
+$('save').addEventListener('click',async()=>{
+  if(!$('consent').checked){msg('fmsg','Marque o consentimento no início antes de salvar.','er');$('consent').scrollIntoView({block:'center'});return}
+  if(!Q.some(answered)){msg('fmsg','Responda pelo menos uma pergunta antes de salvar.','er');return}
+  const db=await getDb();
+  if(!db){msg('fmsg','Não foi possível salvar: abra este link logado na sua conta do Claude.','er');return}
+  $('save').disabled=true;
+  try{
+    await db.collection('respostas').add({ts:Date.now(),r:ans});
+    msg('fmsg','Resposta salva. Formulário limpo para a próxima pessoa.','ok');
+    $('consent').checked=false;render();window.scrollTo({top:0,behavior:'smooth'});
+  }catch(e){
+    msg('fmsg',e&&e.code==='quota_exceeded'?'Limite de armazenamento atingido.':'Erro ao salvar ('+(e&&e.code||'desconhecido')+'). Tente de novo.','er');
+  }finally{$('save').disabled=false}
+});
+
+/* Resultados */
+let rows=[];
+async function load(){
+  const db=await getDb();
+  if(!db){msg('rmsg','Abra este link logado na sua conta do Claude para ver as respostas.','er');return}
+  try{
+    const s=await db.collection('respostas').orderBy('ts').get();
+    rows=s.docs.map(d=>({id:d.id,...d.data()}));
+    fillFlt();show();msg('rmsg','','');
+  }catch(e){msg('rmsg','Erro ao carregar ('+(e&&e.code||'desconhecido')+').','er')}
+}
+function fillFlt(){
+  const cur=$('flt').value||'';
+  const f=Q[0].o.map(clean);
+  $('flt').innerHTML='<option value="">Todas as respostas</option>'+f.map(o=>'<option'+(o===cur?' selected':'')+'>'+o+'</option>').join('');
+}
+function bars(items,total){
+  return items.map(([l,c])=>'<div class="rb"><span>'+l+'</span><div class="b"><i style="width:'+(total?c/total*100:0)+'%"></i></div><b>'+c+'</b></div>').join('');
+}
+function show(){
+  const fv=$('flt').value;
+  const R=rows.filter(x=>!fv||x.r.q1===fv);
+  $('tot').textContent=R.length+(fv?' de '+rows.length:'');
+  $('rout').innerHTML=R.length?B.map(b=>'<h2 style="margin-top:22px">'+b.t+'</h2>'+b.q.map(q=>{
+    let h='<div class="q"><p class="t">'+q.p+'</p>';
+    if(q.t==='s'||q.t==='m'){
+      const opts=q.o.map(clean);
+      const items=opts.map(o=>[o,R.filter(x=>{const v=x.r[q.k];return q.t==='s'?v===o:Array.isArray(v)&&v.includes(o)}).length]);
+      h+=bars(items,R.length);
+      const oth=R.map(x=>x.r[q.k+'_o']).filter(Boolean);
+      if(oth.length)h+='<p class="hint" style="margin-top:8px">Outros citados:</p><ul class="tx">'+oth.map(t=>'<li>'+esc(t)+'</li>').join('')+'</ul>';
+    }else if(q.t==='g'){
+      h+=q.r.map((r,i)=>{
+        const L=String.fromCharCode(97+i);
+        return '<p class="hint" style="margin:10px 0 2px">'+L+') '+r+'</p>'+bars(S.map(s=>[s,R.filter(x=>x.r[q.k]&&x.r[q.k][L]===s).length]),R.length);
+      }).join('');
+    }else{
+      const t=R.map(x=>x.r[q.k]).filter(v=>v&&v.trim());
+      h+=t.length?'<ul class="tx">'+t.map(v=>'<li>'+esc(v)+'</li>').join('')+'</ul>':'<p class="hint">Sem respostas escritas.</p>';
+    }
+    return h+'</div>';
+  }).join('')).join(''):'<div class="q"><p class="hint" style="margin:0">Nenhuma resposta ainda. Aplique o questionário na aba ao lado.</p></div>';
+}
+$('flt').addEventListener('change',show);
+$('rel').addEventListener('click',load);
+
+function csvCell(v){return '"'+String(v==null?'':v).replace(/"/g,'""')+'"'}
+$('csv').addEventListener('click',async()=>{
+  if(!rows.length){msg('rmsg','Não há respostas para baixar.','er');return}
+  const cols=[];
+  Q.forEach((q,n)=>{
+    if(q.t==='g')q.r.forEach((r,i)=>cols.push([(n+1)+String.fromCharCode(97+i)+' '+r,x=>(x.r[q.k]||{})[String.fromCharCode(97+i)]]));
+    else{cols.push([(n+1)+' '+q.p,x=>{const v=x.r[q.k];return Array.isArray(v)?v.join(' | '):v}]);
+      if(q.o&&q.o.some(o=>o.endsWith('*')))cols.push([(n+1)+' (outro)',x=>x.r[q.k+'_o']])}
+  });
+  const head=['Data',...cols.map(c=>c[0])].map(csvCell).join(',');
+  const body=rows.map(x=>[new Date(x.ts).toLocaleString('pt-BR'),...cols.map(c=>c[1](x))].map(csvCell).join(',')).join('\n');
+  const data='\ufeff'+head+'\n'+body;
+  try{
+    const d=await window.claude.use('downloads');
+    if(!d){msg('rmsg','Download indisponível neste modo de visualização.','er');return}
+    await d.save({filename:'respostas-questionario.csv',data});
+  }catch(e){msg('rmsg','O download foi cancelado ou falhou.','er')}
+});
+
+let armed=false,tm;
+$('del').addEventListener('click',async()=>{
+  if(!armed){armed=true;$('del').textContent='Toque de novo para apagar TUDO';tm=setTimeout(()=>{armed=false;$('del').textContent='Apagar todas as respostas'},4000);return}
+  clearTimeout(tm);armed=false;$('del').textContent='Apagar todas as respostas';
+  const db=await getDb();if(!db)return;
+  try{for(const r of rows)await db.collection('respostas').doc(r.id).delete();rows=[];show();msg('rmsg','Todas as respostas foram apagadas.','ok')}
+  catch(e){msg('rmsg','Erro ao apagar ('+(e&&e.code||'desconhecido')+').','er')}
+});
+
+function tab(a){
+  $('apply').hidden=!a;$('results').hidden=a;$('pg').hidden=!a;
+  $('tA').setAttribute('aria-pressed',a);$('tR').setAttribute('aria-pressed',!a);
+  window.scrollTo({top:0});if(!a)load();
+}
+$('tA').addEventListener('click',()=>tab(true));
+$('tR').addEventListener('click',()=>tab(false));
+render();
+</script>
+</body>
+</html>
